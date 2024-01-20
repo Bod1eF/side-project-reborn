@@ -4,19 +4,19 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` text,
   `password` text,
   `schoolyear` int,
-  
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `player_character` (
+CREATE TABLE IF NOT EXISTS `posts` (
 `id` int NOT NULL AUTO_INCREMENT,
-`character_name` varchar(16),
-`class` varchar(16),
-`combat` int,
-`charisma` int,
-`celerity` int,
-`position` int,
+`title` varchar(64),
+`body` varchar(300),
+`coding` boolean,
+`research` boolean,
+`hobby` boolean,
+`num_collaborators` int,
+`date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 `user_id` int,
-`isActive` boolean,
+
  PRIMARY KEY (`id`)
 );
