@@ -9,12 +9,10 @@ if (isset($_POST["email"]) && isset($_POST["password"]) == true) { //if coming f
   if (filter_var(htmlspecialchars($_POST["email"]), FILTER_VALIDATE_EMAIL)) { //validates email is legit
 
     echo "registering account";
-  // try {
     try {
-      $conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-      $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
       echo "Connected successfully";
-      $sth = $conn->prepare("INSERT INTO user (`email`, `password`, `isAdmin`)
+      $sth = $dbh->prepare("INSERT INTO user (`email`, `password`, `isAdmin`)
       VALUES (:reg_email, :reg_password, false);"); //store account info into database
       $sth->bindValue(':reg_email', htmlspecialchars($_POST["email"]));
       $sth->bindValue(':reg_password', password_hash(htmlspecialchars($_POST["password"]), PASSWORD_DEFAULT));
@@ -23,9 +21,10 @@ if (isset($_POST["email"]) && isset($_POST["password"]) == true) { //if coming f
       $sth_id->bindValue(':reg_email', htmlspecialchars($_POST["email"]));
       $sth_id->execute();
       $reg_id = $sth_id->fetch();
-      $sth_char->execute();
       $new_account = true;
-    } catch(PDOException $e) {
+      echo "Account registered";
+    } 
+    catch(PDOException $e) {
       echo "Connection failed: " . $e->getMessage();
     }
 }

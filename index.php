@@ -1,5 +1,18 @@
 <?php
 session_start();
+require_once "sql_config.php";
+
+if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["catagory"] && isset($_POST["catagory"]) == true)) {//if coming from create post, add post to database
+    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    echo "Connected successfully";
+    $sth = $dbh->prepare("SELECT *, user.id AS user_id FROM user
+    JOIN posts
+    ON user.id = posts.user_id
+    WHERE
+    user.id =:log_user_id;");
+    $sth->bindValue(':reg_email', htmlspecialchars($_POST["email"]));
+    $sth->execute();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +44,24 @@ body {font-size:16px;}
     <h3 class="w3-padding-64"><b>Welcome!</b></h3>
   </div>
   <div class="w3-bar-block">
-    <a href="login.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Login</a> 
+ <?php 
+
+    try {
+        if (isset($_SESSION["user_id"])) {
+            echo '<a href="logout.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Log Out</a>';
+
+      }
+       else {
+        echo '<a href="login.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Log In</a>';
+      }
+}
+
+catch (PDOException $e) {
+    echo "<p>Error: {$e->getMessage()}</p>";
+  }
+
+
+?>
     <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Recent Posts</a> 
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
     <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a>
