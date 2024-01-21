@@ -1,14 +1,13 @@
 <?php
 session_start();
 require_once "sql_config.php";
-var_dump($_POST);
-if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["Category"]) && isset($_POST["name"]) && isset($_SESSION["user_id"])  == true) {//if coming from create post, add post to database
+if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["category"]) && isset($_POST["name"]) && isset($_SESSION["user_id"])  == true) {//if coming from create post, add post to database
     
   try {
     $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-    echo '<script>alert("post submitted")</script>'; 
+    echo '<script>alert("Post Submitted!")</script>'; 
     $acceptable_categories = ["tech", "bio", "crafts", "art"];
-    if (!in_array(htmlspecialchars($_POST["Category"]), $acceptable_categories)) {
+    if (!in_array(htmlspecialchars($_POST["category"]), $acceptable_categories)) {
       header("Location: logout.php");
       exit;
     }
@@ -16,7 +15,7 @@ if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["Category"])
     VALUES (:reg_title, :reg_body, :reg_category, :reg_name, 1, :reg_user_id);"); //store post data in posts db
     $sth->bindValue(':reg_title', htmlspecialchars($_POST["title"]));
     $sth->bindValue(':reg_body', htmlspecialchars($_POST["body"]));
-    $sth->bindValue(':reg_category', htmlspecialchars($_POST["Category"]));
+    $sth->bindValue(':reg_category', htmlspecialchars($_POST["category"]));
     $sth->bindValue(':reg_name', htmlspecialchars($_POST["name"]));
     $sth->bindValue(':reg_user_id', htmlspecialchars($_SESSION["user_id"]));
     $sth->execute();
@@ -77,6 +76,8 @@ catch (PDOException $e) {
     <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Recent Posts</a> 
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
     <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a>
+    <?php 
+    ?>
   </div>
 </nav>
 
