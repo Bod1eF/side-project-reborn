@@ -23,6 +23,20 @@ if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["category"])
   catch (PDOException $e) {
     echo "<p>Error: {$e->getMessage()}</p>";
   }
+try { //fetch all posts in the posts table 
+  $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+  $sth_posts= $dbh->prepare("SELECT *, posts.user_id AS post_user_id  FROM posts
+  JOIN user
+  ON user.id = posts.post_user_id
+  WHERE
+  user.id =:log_user_id;");
+  $sth_posts->execute();
+  $arr_of_posts = $sth_posts->fetch_all()
+
+}
+catch (PDOException $e) {
+  echo "<p>Error: {$e->getMessage()}</p>";
+}
 }
 ?>
 <!DOCTYPE html>
@@ -73,6 +87,7 @@ catch (PDOException $e) {
 
 
 ?>
+    <a href="form.php" class="w3-bar-item w3-button w3-hover-white">Post a Project</a> 
     <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Recent Posts</a> 
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
     <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a>
@@ -191,7 +206,7 @@ catch (PDOException $e) {
     <h1 class="w3-xxxlarge w3-text-white"><b>Contact</b></h1>
     <hr style="width:50px;border:5px solid white" class="w3-round">
     <p>Do you want us to style your home? Fill out the form and fill me in with the details :) We love meeting new people!</p>
-    <form action="/action_page.php" target="_blank">
+    <form action="index.php" method="POST">
       <div class="w3-section">
         <label><p style="color:white">Name</p></label>
         <input class="w3-input w3-border" type="text" name="Name" required>
