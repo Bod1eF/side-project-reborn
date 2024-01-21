@@ -5,7 +5,6 @@
   try {
 
     if (isset($_POST["user_login"]) && isset($_POST["pass_login"])) {//checks that user came from login
-      var_dump($_POST);}
       $dbh =  new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
       $sth_password = $dbh->prepare("SELECT * FROM user WHERE email=:login_email");//find pass_hash where id matches login id
       $sth_password->bindValue(':login_email', htmlspecialchars($_POST["user_login"]));
@@ -21,6 +20,7 @@
       header('Location: index.php');
       exit;
     }
+   }
   }
 
   catch (PDOException $e) {
@@ -36,7 +36,10 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 <style>
-
+#logged_in {
+  display:flex;
+  
+}
 body {
  background-color: #e2d5ed; /* For browsers that do not support gradients */
  background-image: linear-gradient(#e2d5ed, #665375);
@@ -101,7 +104,7 @@ body {font-size:16px;}
       <h1 class="w3-xxxlarge w3-text-white"><b>Post</b></h1>
       <hr style="width:50px;border:5px solid white" class="w3-round">
       <p style="color:white">Share your projects with other students and join the Side Project community!</p>
-      <form action="/action_page.php" target="_blank">
+      <form action="index.php" target="_blank">
         <div class="w3-section">
           <label><p style="color:white">Name</p></label>
           <input class="w3-input w3-border" type="text" name="Name" required>
