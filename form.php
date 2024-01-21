@@ -124,7 +124,7 @@ body {font-size:16px;}
         </div>
         <div class="w3-section">
           <label><p style="color:white">Title</p></label>
-          <input class="w3-input w3-border" type="text" name="title" required>
+          <input class="w3-input w3-border" type="text" name="title" required maxlength='32'>
         </div>
         <input type="radio" id="Art" name="category" value="art">
         <label for="Art" style="color:white">Art</label><br>

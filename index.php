@@ -91,7 +91,6 @@ catch (PDOException $e) {
 ?>
     <a href="form.php" class="w3-bar-item w3-button w3-hover-white">Post a Project</a> 
     <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Recent Posts</a> 
-    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
     <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a>
   
   </div>
@@ -159,9 +158,9 @@ catch (PDOException $e) {
       echo '<img src="Crafts_Cat.png" alt="John" style="width:100%">';
     }
     echo '<div class="w3-container">';
-    echo '<h3>' . $post['name'] . "  " . $post['email'] . '</h3>';
-    echo '<p class="w3-opacity">' . $post['title'] . " " . $post['date'] . '</p>';
-    echo '<p>'. $post['body'] . '</p>';
+    echo '<h3>'  . $post['title'] .  '</h3>';
+    echo '<p class="w3-opacity">' . $post['name'] . "  " . $post['email'] .  '</p>';
+    echo '<p>' . $post['date'] . '<br>' .$post['body'] . '</p>';
     echo '</div></div></div>';
     $count++;
     if ($count % 3 == 1) {
@@ -175,72 +174,7 @@ catch (PDOException $e) {
     echo "<p>Error: {$e->getMessage()}</p>";
   }
   ?>
-  <!-- Recent Posts 3x6 Grid -->
-  <div class="w3-row-padding w3-grayscale">
-    <div class="w3-col m4 w3-margin-bottom">
-      <div class="w3-light-grey">
-        <img src="Bio_Cat.png" alt="John" style="width:100%">
-        <div class="w3-container">
-          <h3>John Doe</h3>
-          <p class="w3-opacity">CEO & Founder</p>
-          <p>(Insert link to GitHub/Project)</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="w3-col m4 w3-margin-bottom">
-      <div class="w3-light-grey">
-        <img src="Tech_Cat.png" alt="Jane" style="width:100%">
-        <div class="w3-container">
-          <h3>Jane Doe</h3>
-          <p class="w3-opacity">Designer</p>
-          <p>(Insert link to GitHub/Project)</p>
-        </div>
-      </div>
-    </div>
-    <div class="w3-col m4 w3-margin-bottom">
-      <div class="w3-light-grey">
-        <img src="Art_Cat.png" alt="Mike" style="width:100%">
-        <div class="w3-container">
-          <h3>Mike Ross</h3>
-          <p class="w3-opacity">Architect</p>
-          <p>(Insert link to GitHub/Project)</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="w3-row-padding w3-grayscale">
-    <div class="w3-col m4 w3-margin-bottom">
-      <div class="w3-light-grey">
-        <img src="Chainsaw_Cat.png" alt="John" style="width:100%">
-        <div class="w3-container">
-          <h3>John Doe</h3>
-          <p class="w3-opacity">CEO & Founder</p>
-          <p>(Insert link to GitHub/Project)</p>
-        </div>
-      </div>
-    </div>
-    <div class="w3-col m4 w3-margin-bottom">
-      <div class="w3-light-grey">
-        <img src="Bio_Cat.png" alt="Jane" style="width:100%">
-        <div class="w3-container">
-          <h3>Jane Doe</h3>
-          <p class="w3-opacity">Designer</p>
-          <p>(Insert link to GitHub/Project)</p>
-        </div>
-      </div>
-    </div>
-    <div class="w3-col m4 w3-margin-bottom">
-      <div class="w3-light-grey">
-        <img src="Bio_Cat.png" alt="Mike" style="width:100%">
-        <div class="w3-container">
-          <h3>Mike Ross</h3>
-          <p class="w3-opacity">Architect</p>
-          <p>(Insert link to GitHub/Project)</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- Designers -->
   <div class="w3-container" id="designers" style="margin-top:75px">
