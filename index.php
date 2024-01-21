@@ -30,10 +30,10 @@ if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["category"])
   }
 try { //fetch all posts in the posts table 
   $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-  $sth_posts= $dbh->prepare("SELECT * FROM posts INNER JOIN user
+  $sth_posts= $dbh->prepare("SELECT email, title, body, name, category, date, num_collaborators FROM posts INNER JOIN user
   ON posts.user_id = user.id;");
   $sth_posts->execute();
-  $arr_of_posts = $sth_posts->fetch();  
+  $arr_of_posts = $sth_posts->fetchAll();  
   var_dump($arr_of_posts);
 }
 catch (PDOException $e) {
