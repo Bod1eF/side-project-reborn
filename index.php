@@ -1,5 +1,18 @@
 <?php
 session_start();
+require_once "sql_config.php";
+
+if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["catagory"] && isset($_POST["catagory"]) == true)) {//if coming from create post, add post to database
+    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    echo "Connected successfully";
+    $sth = $dbh->prepare("SELECT *, user.id AS user_id FROM user
+    JOIN posts
+    ON user.id = posts.user_id
+    WHERE
+    user.id =:log_user_id;");
+    $sth->bindValue(':reg_email', htmlspecialchars($_POST["email"]));
+    $sth->execute();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
