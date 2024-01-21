@@ -11,7 +11,6 @@ if (isset($_POST["email"]) && isset($_POST["password"]) == true) { //if coming f
     echo "registering account";
     try {
       $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-      echo "Connected successfully";
       $sth = $dbh->prepare("INSERT INTO user (`email`, `password`, `isAdmin`)
       VALUES (:reg_email, :reg_password, false);"); //store account info into database
       $sth->bindValue(':reg_email', htmlspecialchars($_POST["email"]));
@@ -22,7 +21,7 @@ if (isset($_POST["email"]) && isset($_POST["password"]) == true) { //if coming f
       $sth_id->execute();
       $reg_id = $sth_id->fetch();
       $new_account = true;
-      echo "Account registered";
+      echo "<<h1 id='logged_in'>Account registered</h1>";
     } 
     catch(PDOException $e) {
       echo "Connection failed: " . $e->getMessage();
@@ -47,6 +46,12 @@ body {
  background-color: #e2d5ed;
 }
     
+#logged_in {
+  display:flex;
+  justify-content:center;
+
+}
+
 body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
 body {font-size:16px;}
 .w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
