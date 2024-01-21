@@ -41,6 +41,10 @@
   justify-content:center;
 
 }
+
+#area {
+  padding:10px;
+}
 body {
  background-color: #e2d5ed; /* For browsers that do not support gradients */
  background-image: linear-gradient(#e2d5ed, #665375);
@@ -124,7 +128,7 @@ body {font-size:16px;}
         <label for="Craftsmenship" style="color:white">Craftsmenship</label><br>
 
         <div class="w3-section">
-          <label><p style="color:white">Message</p></label>
+          <label><p style="color:white">Body</p></label>
           <textarea id="area" rows="4" cols="100" maxlength="300" name="body" placeholder="Enter your Text Here"> 
           </textarea>
           <p class="result" style="color:white"> 

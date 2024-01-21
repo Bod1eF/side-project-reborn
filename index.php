@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once "sql_config.php";
-
+var_dump($_POST);
 if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["Category"]) && isset($_POST["name"]) && isset($_SESSION["user_id"])  == true) {//if coming from create post, add post to database
     
   try {
