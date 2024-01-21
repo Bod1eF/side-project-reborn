@@ -21,10 +21,10 @@
       exit;
     }
    }
-   else { //if not logged in and didnt come from login header them
+  }
+  else { //if not logged in and didnt come from login header them
     header('Location: index.php');
     exit;
-  }
   }
 
 }
