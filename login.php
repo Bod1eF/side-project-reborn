@@ -7,23 +7,27 @@ $new_account = false;
 
 if (isset($_POST["email"]) && isset($_POST["password"]) == true) { //if coming from register, update user table to create account
   if (filter_var(htmlspecialchars($_POST["email"]), FILTER_VALIDATE_EMAIL)) { //validates email is legit
-  try {
-  $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWORD);
-  $sth = $dbh->prepare("INSERT INTO user (`email`, `password`, `isAdmin`)
-  VALUES (:reg_email, :reg_password, false);"); //store account info into database
-  $sth->bindValue(':reg_email', htmlspecialchars($_POST["email"]));
-  $sth->bindValue(':reg_password', password_hash(htmlspecialchars($_POST["password"]), PASSWORD_DEFAULT));
-  $sth->execute();
-  $sth_id = $dbh->prepare("SELECT * FROM user WHERE `email`=:reg_email"); //gets user row of newly created account
-  $sth_id->bindValue(':reg_email', htmlspecialchars($_POST["email"]));
-  $sth_id->execute();
-  $reg_id = $sth_id->fetch();
-  $sth_char->execute();
-  $new_account = true;
-  }
-  catch (PDOException $e) {
-  echo "<p>Error: {$e->getMessage()}</p>";
-            }
+
+    echo "registering account";
+  // try {
+    try {
+      $conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+      $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      echo "Connected successfully";
+      $sth = $conn->prepare("INSERT INTO user (`email`, `password`, `isAdmin`)
+      VALUES (:reg_email, :reg_password, false);"); //store account info into database
+      $sth->bindValue(':reg_email', htmlspecialchars($_POST["email"]));
+      $sth->bindValue(':reg_password', password_hash(htmlspecialchars($_POST["password"]), PASSWORD_DEFAULT));
+      $sth->execute();
+      $sth_id = $dbh->prepare("SELECT * FROM user WHERE `email`=:reg_email"); //gets user row of newly created account
+      $sth_id->bindValue(':reg_email', htmlspecialchars($_POST["email"]));
+      $sth_id->execute();
+      $reg_id = $sth_id->fetch();
+      $sth_char->execute();
+      $new_account = true;
+    } catch(PDOException $e) {
+      echo "Connection failed: " . $e->getMessage();
+    }
 }
 }
 ?>
