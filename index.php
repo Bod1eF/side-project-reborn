@@ -205,28 +205,6 @@ catch (PDOException $e) {
       </div>
     </div>
   </div>
-  
-  <!-- Contact -->
-  <div class="w3-container" id="contact" style="margin-top:75px">
-    <h1 class="w3-xxxlarge w3-text-white"><b>Contact</b></h1>
-    <hr style="width:50px;border:5px solid white" class="w3-round">
-    <p>Feel free to shoot us a message!</p>
-    <form action="index.php" method="POST">
-      <div class="w3-section">
-        <label><p style="color:white">Name</p></label>
-        <input class="w3-input w3-border" type="text" name="Name" required>
-      </div>
-      <div class="w3-section">
-        <label><p style="color:white">Email</p></label>
-        <input class="w3-input w3-border" type="text" name="Email" required>
-      </div>
-      <div class="w3-section">
-        <label><p style="color:white">Message</p></label>
-        <input class="w3-input w3-border" type="text" name="Message" required>
-      </div>
-      <button type="submit" class="w3-button w3-block w3-padding-large w3-white w3-margin-bottom">Send Message</button>
-    </form>  
-  </div>
 
   <!-- Designers -->
   <div class="w3-container" id="designers" style="margin-top:75px">
