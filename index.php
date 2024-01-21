@@ -24,14 +24,14 @@ if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["category"])
     echo "<p>Error: {$e->getMessage()}</p>";
   }
 try { //fetch all posts in the posts table 
-  $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-  $sth_posts= $dbh->prepare("SELECT *, posts.user_id AS post_user_id  FROM posts
-  JOIN user
-  ON user.id = posts.post_user_id
-  WHERE
-  user.id =:log_user_id;");
-  $sth_posts->execute();
-  $arr_of_posts = $sth_posts->fetch_all()
+  // $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+  // $sth_posts= $dbh->prepare("SELECT *, posts.user_id AS post_user_id  FROM posts
+  // JOIN user
+  // ON user.id = posts.post_user_id
+  // WHERE
+  // user.id =:log_user_id;");
+  // $sth_posts->execute();
+  // $arr_of_posts = $sth_posts->fetch_all()
 
 }
 catch (PDOException $e) {

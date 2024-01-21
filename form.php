@@ -3,25 +3,31 @@
   require_once "sql_config.php";
 
   try {
+    if (!isset($_SESSION["user_id"])) {
+      if (isset($_POST["user_login"]) && isset($_POST["pass_login"])) {//checks that user came from login
+        $dbh =  new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+        $sth_password = $dbh->prepare("SELECT * FROM user WHERE email=:login_email");//find pass_hash where id matches login id
+        $sth_password->bindValue(':login_email', htmlspecialchars($_POST["user_login"]));
+        $sth_password->execute();
+        $login_row = $sth_password->fetch();
+        $user_id = $login_row["id"]; 
+        $_SESSION["user_id"] = $user_id; //store user id in session
 
-    if (isset($_POST["user_login"]) && isset($_POST["pass_login"])) {//checks that user came from login
-      $dbh =  new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-      $sth_password = $dbh->prepare("SELECT * FROM user WHERE email=:login_email");//find pass_hash where id matches login id
-      $sth_password->bindValue(':login_email', htmlspecialchars($_POST["user_login"]));
-      $sth_password->execute();
-      $login_row = $sth_password->fetch();
-      $user_id = $login_row["id"]; 
-      $_SESSION["user_id"] = $user_id; //store user id in session
-
-    if (password_verify(htmlspecialchars($_POST["pass_login"]), $login_row['password'])) { //verify password agaisnt hash
+      if (password_verify(htmlspecialchars($_POST["pass_login"]), $login_row['password'])) { //verify password agaisnt hash
         echo "<h1 id='logged_in'> Succesfully Logged in as " . htmlspecialchars($_POST["user_login"]) . "</h2>";
-    }
+      }
     else { //if password doesn't match send to sign in
       header('Location: index.php');
       exit;
     }
    }
+   else { //if not logged in and didnt come from login header them
+    header('Location: index.php');
+    exit;
   }
+  }
+
+}
 
   catch (PDOException $e) {
     echo "<p>Error: {$e->getMessage()}</p>";
@@ -62,10 +68,13 @@ body {font-size:16px;}
 <nav class="w3-sidebar w3-silver w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
   <div class="w3-container">
+    <a href="index.php">
     <img src="Untitled_Artwork.png"
         width="210"
         height="125">
+</a>
   </div>
+
   <div class="w3-bar-block">
     <a href="loggedin.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Profile</a> 
     <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Recent Posts</a> 
