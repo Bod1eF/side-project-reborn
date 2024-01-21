@@ -1,3 +1,32 @@
+<?php
+  session_start();
+  require_once "sql_config.php";
+
+  try {
+
+    if (isset($_POST["user_login"]) && isset($_POST["pass_login"])) {//checks that user came from login
+      var_dump($_POST);}
+      $dbh =  new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+      $sth_password = $dbh->prepare("SELECT * FROM user WHERE email=:login_email");//find pass_hash where id matches login id
+      $sth_password->bindValue(':login_email', htmlspecialchars($_POST["user_login"]));
+      $sth_password->execute();
+      $login_row = $sth_password->fetch();
+      $user_id = $login_row["id"]; 
+      $_SESSION["user_id"] = $user_id; //store user id in session
+
+    if (password_verify(htmlspecialchars($_POST["pass_login"]), $login_row['password'])) { //verify password agaisnt hash
+        echo "<h1 id='logged_in'> Succesfully Logged in as " . htmlspecialchars($_POST["user_login"]) . "</h2>";
+    }
+    else { //if password doesn't match send to sign in
+      header('Location: index.php');
+      exit;
+    }
+  }
+
+  catch (PDOException $e) {
+    echo "<p>Error: {$e->getMessage()}</p>";
+    }
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +47,32 @@ body {font-size:16px;}
 .w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
 .w3-half img:hover{opacity:1}
 </style>
+
+<script> 
+            let area = document.getElementById('area'); 
+            let char = document.getElementById('char'); 
+            let word = document.getElementById('word'); 
+      
+            area.addEventListener('input', function () { 
+                // count characters  
+                let content = this.value; 
+                char.textContent = content.length; 
+      
+                // remove empty spaces from start and end  
+                content.trim(); 
+                console.log(content); 
+      
+                let wordList = content.split(/\s/); 
+      
+                // Remove spaces from between words  
+                let words = wordList.filter(function (element) { 
+                    return element != ""; 
+                }); 
+      
+                // count words  
+                word.textContent = words.length; 
+            }); 
+        </script> 
 </head>
 <body>
 
@@ -72,58 +127,33 @@ body {font-size:16px;}
       <h1 class="w3-xxxlarge w3-text-white"><b>Post</b></h1>
       <hr style="width:50px;border:5px solid white" class="w3-round">
       <p style="color:white">Share your projects with other students and join the Side Project community!</p>
-      <form action="/action_page.php" target="_blank">
+      <form action="index.php" method="POST">
         <div class="w3-section">
           <label><p style="color:white">Name</p></label>
-          <input class="w3-input w3-border" type="text" name="Name" required>
+          <input class="w3-input w3-border" type="text" name="name" required>
         </div>
         <div class="w3-section">
           <label><p style="color:white">Title</p></label>
-          <input class="w3-input w3-border" type="text" name="Title" required>
+          <input class="w3-input w3-border" type="text" name="title" required>
         </div>
-        <input type="radio" id="Art" name="Category" value="Art">
+        <input type="radio" id="Art" name="Category" value="art">
         <label for="Art" style="color:white">Art</label><br>
-        <input type="radio" id="Tech" name="Category" value="Tech">
+        <input type="radio" id="Tech" name="Category" value="tech">
         <label for="Tech" style="color:white">Tech</label><br>
-        <input type="radio" id="Biology" name="Category" value="Biology">
+        <input type="radio" id="Biology" name="Category" value="bio">
         <label for="Biology" style="color:white">Biology</label><br>
-        <input type="radio" id="Craftsmenship" name="Category" value="Craftsmenship">
+        <input type="radio" id="Craftsmenship" name="Category" value="crafts">
         <label for="Craftsmenship" style="color:white">Craftsmenship</label><br>
 
         <div class="w3-section">
           <label><p style="color:white">Message</p></label>
-          <textarea id="area" rows="4" cols="100" maxlength="300" placeholder="Enter your Text Here"> 
+          <textarea id="area" rows="4" cols="100" maxlength="300" value="body" name="body" placeholder="Enter your Text Here"> 
           </textarea>
           <p class="result" style="color:white"> 
             <span id="word" style="color:white">0</span> Words and
               <span id="char" style="color:white">0</span> Characters 
           </p>
         </div>
-        <script> 
-            let area = document.getElementById('area'); 
-            let char = document.getElementById('char'); 
-            let word = document.getElementById('word'); 
-      
-            area.addEventListener('input', function () { 
-                // count characters  
-                let content = this.value; 
-                char.textContent = content.length; 
-      
-                // remove empty spaces from start and end  
-                content.trim(); 
-                console.log(content); 
-      
-                let wordList = content.split(/\s/); 
-      
-                // Remove spaces from between words  
-                let words = wordList.filter(function (element) { 
-                    return element != ""; 
-                }); 
-      
-                // count words  
-                word.textContent = words.length; 
-            }); 
-        </script> 
         <button type="submit" class="w3-button w3-block w3-padding-large w3-white w3-margin-bottom">Post</button>
       </form>  
     </div>

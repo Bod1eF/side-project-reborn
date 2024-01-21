@@ -9,11 +9,10 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 CREATE TABLE IF NOT EXISTS `posts` (
 `id` int NOT NULL AUTO_INCREMENT,
-`title` varchar(64),
+`title` varchar(32),
 `body` varchar(300),
-`coding` boolean,
-`research` boolean,
-`hobby` boolean,
+`name` varchar(18),
+`category` varchar(16),
 `num_collaborators` int,
 `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 `user_id` int,
