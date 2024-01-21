@@ -3,8 +3,9 @@
   require_once "sql_config.php";
 
   try {
-    if (!isset($_SESSION["user_id"])) {
-      if (isset($_POST["user_login"]) && isset($_POST["pass_login"])) {//checks that user came from login
+    if (isset($_SESSION["user_id"])) {
+    }
+    elseif (isset($_POST["user_login"]) && isset($_POST["pass_login"])) {//checks that user came from login
         $dbh =  new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
         $sth_password = $dbh->prepare("SELECT * FROM user WHERE email=:login_email");//find pass_hash where id matches login id
         $sth_password->bindValue(':login_email', htmlspecialchars($_POST["user_login"]));
@@ -21,14 +22,12 @@
       exit;
     }
    }
-  }
-  else { //if not logged in and didnt come from login header them
-    header('Location: index.php');
+   else { //if password doesn't match send to sign in
+    header('Location: login.php');
     exit;
   }
-
-}
-
+  }
+ 
   catch (PDOException $e) {
     echo "<p>Error: {$e->getMessage()}</p>";
     }
@@ -79,7 +78,7 @@ body {font-size:16px;}
     <a href="loggedin.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Profile</a> 
     <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Recent Posts</a> 
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
-    <a href="frontpage.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Log Out</a>
+    <a href="logout.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Log Out</a>
   </div>
 </nav>
 
