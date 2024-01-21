@@ -35,7 +35,7 @@ if (isset($_POST["email"]) && isset($_POST["password"]) == true) { //if coming f
 <head>
  <title>Side Project</title>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="index.css" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
