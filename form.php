@@ -38,7 +38,7 @@
 <style>
 #logged_in {
   display:flex;
-  
+
 }
 body {
  background-color: #e2d5ed; /* For browsers that do not support gradients */
@@ -104,7 +104,7 @@ body {font-size:16px;}
       <h1 class="w3-xxxlarge w3-text-white"><b>Post</b></h1>
       <hr style="width:50px;border:5px solid white" class="w3-round">
       <p style="color:white">Share your projects with other students and join the Side Project community!</p>
-      <form action="index.php" target="_blank">
+      <form action="index.php">
         <div class="w3-section">
           <label><p style="color:white">Name</p></label>
           <input class="w3-input w3-border" type="text" name="Name" required>
