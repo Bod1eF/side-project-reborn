@@ -28,17 +28,17 @@ if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["category"])
   catch (PDOException $e) {
     echo "<p>Error: {$e->getMessage()}</p>";
   }
+}
+
 try { //fetch all posts in the posts table 
   $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
   $sth_posts= $dbh->prepare("SELECT email, title, body, name, category, date, num_collaborators FROM posts INNER JOIN user
-  ON posts.user_id = user.id;");
+  ON posts.user_id = user.id ORDER BY date DESC;");
   $sth_posts->execute();
-  $arr_of_posts = $sth_posts->fetchAll();  
-  var_dump($arr_of_posts);
+  $arr_of_posts = $sth_posts->fetchAll(PDO::FETCH_ASSOC);  
 }
 catch (PDOException $e) {
   echo "<p>Error: {$e->getMessage()}</p>";
-}
 }
 ?>
 <!DOCTYPE html>
@@ -74,7 +74,6 @@ body {font-size:16px;}
  <?php 
 
     try {
-      var_dump($arr_of_posts);
         if (isset($_SESSION["user_id"])) {
             echo '<a href="logout.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Log Out</a>';
 
@@ -94,10 +93,7 @@ catch (PDOException $e) {
     <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Recent Posts</a> 
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
     <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a>
-    
-    <?php 
-     echo $arr_of_posts;
-    ?>
+  
   </div>
 </nav>
 
@@ -140,6 +136,45 @@ catch (PDOException $e) {
     <p style="color:whitesmoke">See the most recent posts by fellow coders!</p>
   </div>
   
+  <?php
+
+  try {
+  $count = 4;
+  foreach($arr_of_posts as $post) {
+    if ($count % 3 == 1) {
+      echo "<div class='w3-row-padding w3-grayscale'>";
+      echo "<p id='seperator'></p>";
+    }
+    echo '<div class="w3-col m4 w3-margin-bottom"><div class="w3-light-grey">';
+    if ($post['category'] == "art") {
+      echo '<img src="Art_Cat.png" alt="John" style="width:100%">';
+    }
+    elseif ($post['category'] == "bio") {
+      echo '<img src="Bio_Cat.png" alt="John" style="width:100%">';
+    }
+    elseif ($post['category'] == "tech") {
+      echo '<img src="Tech_Cat.png" alt="John" style="width:100%">';
+    }
+    else  {
+      echo '<img src="Crafts_Cat.png" alt="John" style="width:100%">';
+    }
+    echo '<div class="w3-container">';
+    echo '<h3>' . $post['name'] . "  " . $post['email'] . '</h3>';
+    echo '<p class="w3-opacity">' . $post['title'] . " " . $post['date'] . '</p>';
+    echo '<p>'. $post['body'] . '</p>';
+    echo '</div></div></div>';
+    $count++;
+    if ($count % 3 == 1) {
+      echo "</div>";
+    }
+
+  }
+  }
+
+  catch (PDOException $e) {
+    echo "<p>Error: {$e->getMessage()}</p>";
+  }
+  ?>
   <!-- Recent Posts 3x6 Grid -->
   <div class="w3-row-padding w3-grayscale">
     <div class="w3-col m4 w3-margin-bottom">
@@ -152,6 +187,7 @@ catch (PDOException $e) {
         </div>
       </div>
     </div>
+
     <div class="w3-col m4 w3-margin-bottom">
       <div class="w3-light-grey">
         <img src="Tech_Cat.png" alt="Jane" style="width:100%">
