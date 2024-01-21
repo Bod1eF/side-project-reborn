@@ -133,7 +133,7 @@ body {font-size:16px;}
         <input type="radio" id="Biology" name="category" value="bio">
         <label for="Biology" style="color:white">Biology</label><br>
         <input type="radio" id="Craftsmenship" name="category" value="crafts">
-        <label for="Craftsmenship" style="color:white">Craftsmenship</label><br>
+        <label for="Craftsmenship" style="color:white">Craftsmanship</label><br>
 
         <div class="w3-section">
           <label><p style="color:white">Body</p></label>

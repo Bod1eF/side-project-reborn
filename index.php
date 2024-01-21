@@ -4,8 +4,8 @@ require_once "sql_config.php";
 if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["category"]) && isset($_POST["name"]) && isset($_SESSION["user_id"])  == true) {//if coming from create post, add post to database
     
   try {
+    if (!$submitted) {
     $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-    echo '<script>alert("Post Submitted!")</script>'; 
     $acceptable_categories = ["tech", "bio", "crafts", "art"];
     if (!in_array(htmlspecialchars($_POST["category"]), $acceptable_categories)) {
       header("Location: logout.php");
@@ -19,20 +19,32 @@ if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["category"])
     $sth->bindValue(':reg_name', htmlspecialchars($_POST["name"]));
     $sth->bindValue(':reg_user_id', htmlspecialchars($_SESSION["user_id"]));
     $sth->execute();
+    echo '<script>alert("Post Submitted!")</script>'; 
+    $submitted = True;
+  }
   }
   catch (PDOException $e) {
     echo "<p>Error: {$e->getMessage()}</p>";
   }
 try { //fetch all posts in the posts table 
+  $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+  $sth_posts= $dbh->prepare("SELECT *, posts.user_id AS post_user_id  FROM posts
+  JOIN user
+  ON user.id = posts.user_id;");
+  $sth_posts->execute();
+  $arr_of_posts = $sth_posts->fetch_all();
   // $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-  // $sth_posts= $dbh->prepare("SELECT *, posts.user_id AS post_user_id  FROM posts
-  // JOIN user
-  // ON user.id = posts.post_user_id
-  // WHERE
-  // user.id =:log_user_id;");
-  // $sth_posts->execute();
-  // $arr_of_posts = $sth_posts->fetch_all()
 
+  // $sth_posts = $dbh->prepare("SELECT posts.*, user.email AS user_email
+  //                            FROM posts
+  //                            JOIN user ON user.id = posts.user_id;");
+  // $sth_posts->execute();
+  
+  // $arr_of_posts = $sth_posts->fetchAll(PDO::FETCH_ASSOC);
+  
+  // Output the result for debugging purposes
+  // echo $arr_of_posts;
+  
 }
 catch (PDOException $e) {
   echo "<p>Error: {$e->getMessage()}</p>";
@@ -72,6 +84,7 @@ body {font-size:16px;}
  <?php 
 
     try {
+      echo $arr_of_posts;
         if (isset($_SESSION["user_id"])) {
             echo '<a href="logout.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Log Out</a>';
 
@@ -91,7 +104,9 @@ catch (PDOException $e) {
     <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Recent Posts</a> 
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
     <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a>
+    
     <?php 
+     echo $arr_of_posts;
     ?>
   </div>
 </nav>
