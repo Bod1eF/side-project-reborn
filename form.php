@@ -74,17 +74,13 @@ body {font-size:16px;}
       <p style="color:white">Share your projects with other students and join the Side Project community!</p>
       <form action="/action_page.php" target="_blank">
         <div class="w3-section">
-            <label><p style="color:white">Title</p></label>
-            <input class="w3-input w3-border" type="text" name="Title" required>
-          </div>
+          <label><p style="color:white">Name</p></label>
+          <input class="w3-input w3-border" type="text" name="Name" required>
+        </div>
         <div class="w3-section">
-            <label><p style="color:white">Name</p></label>
-            <input class="w3-input w3-border" type="text" name="Name" required>
-          </div>
-        <div class="w3-section">
-            <label><p style="color:white">Email</p></label>
-            <input class="w3-input w3-border" type="text" name="Email" required>
-          </div>
+          <label><p style="color:white">Title</p></label>
+          <input class="w3-input w3-border" type="text" name="Title" required>
+        </div>
         <input type="radio" id="Art" name="Category" value="Art">
         <label for="Art" style="color:white">Art</label><br>
         <input type="radio" id="Tech" name="Category" value="Tech">
@@ -95,7 +91,7 @@ body {font-size:16px;}
         <label for="Craftsmenship" style="color:white">Craftsmenship</label><br>
 
         <div class="w3-section">
-          <label><p style="color:white">Description</p></label>
+          <label><p style="color:white">Message</p></label>
           <textarea id="area" rows="4" cols="100" maxlength="300" placeholder="Enter your Text Here"> 
           </textarea>
           <p class="result" style="color:white"> 

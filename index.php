@@ -2,15 +2,21 @@
 session_start();
 require_once "sql_config.php";
 
-if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["catagory"] && isset($_POST["catagory"]) == true)) {//if coming from create post, add post to database
+if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["Category"]) && isset($_POST["name"]) && isset($_SESSION["user_id"])  == true) {//if coming from create post, add post to database
     $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
     echo "Connected successfully";
-    $sth = $dbh->prepare("SELECT *, user.id AS user_id FROM user
-    JOIN posts
-    ON user.id = posts.user_id
-    WHERE
-    user.id =:log_user_id;");
-    $sth->bindValue(':reg_email', htmlspecialchars($_POST["email"]));
+    $acceptable_catagories = ["tech", "bio", "crafts", "art"]
+    if (!$in_array(htmlspecialchars($_POST["catagory"]))) {
+        header("Location: logout.php")
+        exit;
+    }
+    $sth = $dbh->prepare("INSERT INTO posts (`title`, `body`, `category`, `name`,`num_collaborators`, `user_id`)
+    VALUES (:reg_title, :reg_body, :reg_category, :reg_name, 1, :reg_user_id);"); //store post data in posts db
+    $sth->bindValue(':reg_title', htmlspecialchars($_POST["title"]));
+    $sth->bindValue(':reg_body', htmlspecialchars($_POST["body"]));
+    $sth->bindValue(':reg_category', htmlspecialchars($_POST["Category"]));
+    $sth->bindValue(':reg_name', htmlspecialchars($_POST["name"]));
+    $sth->bindValue(':reg_title', htmlspecialchars($_SESSION["user_id"]));
     $sth->execute();
 }
 ?>
@@ -131,7 +137,7 @@ catch (PDOException $e) {
     </div>
     <div class="w3-col m4 w3-margin-bottom">
       <div class="w3-light-grey">
-        <img src="/w3images/team3.jpg" alt="Mike" style="width:100%">
+        <img src="Art_Cat.png" alt="Mike" style="width:100%">
         <div class="w3-container">
           <h3>Mike Ross</h3>
           <p class="w3-opacity">Architect</p>
@@ -143,7 +149,7 @@ catch (PDOException $e) {
   <div class="w3-row-padding w3-grayscale">
     <div class="w3-col m4 w3-margin-bottom">
       <div class="w3-light-grey">
-        <img src="/w3images/team2.jpg" alt="John" style="width:100%">
+        <img src="Art_Cat.png" alt="John" style="width:100%">
         <div class="w3-container">
           <h3>John Doe</h3>
           <p class="w3-opacity">CEO & Founder</p>
