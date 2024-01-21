@@ -176,7 +176,7 @@ catch (PDOException $e) {
   <div class="w3-row-padding w3-grayscale">
     <div class="w3-col m4 w3-margin-bottom">
       <div class="w3-light-grey">
-        <img src="Art_Cat.png" alt="John" style="width:100%">
+        <img src="Chainsaw_Cat.png" alt="John" style="width:100%">
         <div class="w3-container">
           <h3>John Doe</h3>
           <p class="w3-opacity">CEO & Founder</p>
@@ -230,10 +230,11 @@ catch (PDOException $e) {
 
   <!-- Designers -->
   <div class="w3-container" id="designers" style="margin-top:75px">
-    <h1 class="w3-xxxlarge w3-text-white"><b>Designers</b></h1>
-    <hr style="width:50px;border:5px solid whitesmoke" class="w3-round">
-    <p style="color:white">The best team in the world.</p>
-  </div>
+      <h1 class="w3-xxxlarge w3-text-white"><b>Designers</b></h1>
+      <hr style="width:50px;border:5px solid whitesmoke" class="w3-round">
+      <p style="color:white">The best team in the world.</p>
+      <img src="Us_Cats.png" alt="Cat" style="width:100%">
+    </div>
   
 
 <!-- End page content -->
