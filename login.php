@@ -63,7 +63,7 @@ body {font-size:16px;}
     </div>
     <div class="w3-bar-block">
       <h1> Side Project </h1>
-  <form action="listing.php" method="POST">
+  <form action="form.php" method="POST">
 <div>
 <label for="user_login"> Email: </label>
 <input type="email" name="user_login" id="user_login">
