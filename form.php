@@ -109,22 +109,22 @@ body {font-size:16px;}
       <h1 class="w3-xxxlarge w3-text-white"><b>Post</b></h1>
       <hr style="width:50px;border:5px solid white" class="w3-round">
       <p style="color:white">Share your projects with other students and join the Side Project community!</p>
-      <form action="index.php">
+      <form action="index.php" method="POST">
         <div class="w3-section">
           <label><p style="color:white">Name</p></label>
-          <input class="w3-input w3-border" type="text" name="Name" required>
+          <input class="w3-input w3-border" type="text" name="name" required>
         </div>
         <div class="w3-section">
           <label><p style="color:white">Title</p></label>
-          <input class="w3-input w3-border" type="text" name="Title" required>
+          <input class="w3-input w3-border" type="text" name="title" required>
         </div>
-        <input type="radio" id="Art" name="Category" value="Art">
+        <input type="radio" id="Art" name="category" value="art">
         <label for="Art" style="color:white">Art</label><br>
-        <input type="radio" id="Tech" name="Category" value="Tech">
+        <input type="radio" id="Tech" name="category" value="tech">
         <label for="Tech" style="color:white">Tech</label><br>
-        <input type="radio" id="Biology" name="Category" value="Biology">
+        <input type="radio" id="Biology" name="category" value="bio">
         <label for="Biology" style="color:white">Biology</label><br>
-        <input type="radio" id="Craftsmenship" name="Category" value="Craftsmenship">
+        <input type="radio" id="Craftsmenship" name="category" value="crafts">
         <label for="Craftsmenship" style="color:white">Craftsmenship</label><br>
 
         <div class="w3-section">
