@@ -1,44 +1,3 @@
-<?php
-session_start();
-require_once "sql_config.php";
-if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["category"]) && isset($_POST["name"]) && isset($_SESSION["user_id"])  == true) {//if coming from create post, add post to database
-    
-  try {
-    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-    echo '<script>alert("Post Submitted!")</script>'; 
-    $acceptable_categories = ["tech", "bio", "crafts", "art"];
-    if (!in_array(htmlspecialchars($_POST["category"]), $acceptable_categories)) {
-      header("Location: logout.php");
-      exit;
-    }
-    $sth = $dbh->prepare("INSERT INTO posts (`title`, `body`, `category`, `name`,`num_collaborators`, `user_id`)
-    VALUES (:reg_title, :reg_body, :reg_category, :reg_name, 1, :reg_user_id);"); //store post data in posts db
-    $sth->bindValue(':reg_title', htmlspecialchars($_POST["title"]));
-    $sth->bindValue(':reg_body', htmlspecialchars($_POST["body"]));
-    $sth->bindValue(':reg_category', htmlspecialchars($_POST["category"]));
-    $sth->bindValue(':reg_name', htmlspecialchars($_POST["name"]));
-    $sth->bindValue(':reg_user_id', htmlspecialchars($_SESSION["user_id"]));
-    $sth->execute();
-  }
-  catch (PDOException $e) {
-    echo "<p>Error: {$e->getMessage()}</p>";
-  }
-try { //fetch all posts in the posts table 
-  // $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-  // $sth_posts= $dbh->prepare("SELECT *, posts.user_id AS post_user_id  FROM posts
-  // JOIN user
-  // ON user.id = posts.post_user_id
-  // WHERE
-  // user.id =:log_user_id;");
-  // $sth_posts->execute();
-  // $arr_of_posts = $sth_posts->fetch_all()
-
-}
-catch (PDOException $e) {
-  echo "<p>Error: {$e->getMessage()}</p>";
-}
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,33 +25,15 @@ body {font-size:16px;}
 <nav class="w3-sidebar w3-silver w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
   <div class="w3-container">
-    <h3 class="w3-padding-64"><b>Welcome!</b></h3>
+    <img src="Untitled_Artwork.png"
+        width="200"
+        height="100">
   </div>
   <div class="w3-bar-block">
- <?php 
 
-    try {
-        if (isset($_SESSION["user_id"])) {
-            echo '<a href="logout.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Log Out</a>';
-
-      }
-       else {
-        echo '<a href="login.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Log In</a>';
-      }
-}
-
-catch (PDOException $e) {
-    echo "<p>Error: {$e->getMessage()}</p>";
-  }
-
-
-?>
-    <a href="form.php" class="w3-bar-item w3-button w3-hover-white">Post a Project</a> 
-    <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Recent Posts</a> 
-    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
-    <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a>
-    <?php 
-    ?>
+    <a href="index.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Recent Posts</a> 
+    <a href="index.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
+    <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a>    
   </div>
 </nav>
 
@@ -110,9 +51,6 @@ catch (PDOException $e) {
 
   <!-- Header -->
   <div class="w3-container" style="margin-top:80px" id="showcase">
-    <center><img src="Untitled_Artwork.png"
-        width="600"
-        height="300"></center>
   </div>
   
   <!-- Photo grid (modal) -->
@@ -130,9 +68,9 @@ catch (PDOException $e) {
 
   <!-- Services -->
   <div class="w3-container" id="services" style="margin-top:0px">
-    <h1 class="w3-xxxlarge w3-text-white"><b>Recent Posts</b></h1>
+    <h1 class="w3-xxxlarge w3-text-white"><b>Your Profile</b></h1>
     <hr style="width:50px;border:5px solid whitesmoke" class="w3-round">
-    <p style="color:whitesmoke">See the most recent posts by fellow coders!</p>
+    <p style="color:whitesmoke">Your most recent posts.</p>
   </div>
   
   <!-- Recent Posts 3x6 Grid -->
@@ -199,28 +137,6 @@ catch (PDOException $e) {
         </div>
       </div>
     </div>
-  </div>
-  
-  <!-- Contact -->
-  <div class="w3-container" id="contact" style="margin-top:75px">
-    <h1 class="w3-xxxlarge w3-text-white"><b>Contact</b></h1>
-    <hr style="width:50px;border:5px solid white" class="w3-round">
-    <p>Feel free to shoot us a message!</p>
-    <form action="index.php" method="POST">
-      <div class="w3-section">
-        <label><p style="color:white">Name</p></label>
-        <input class="w3-input w3-border" type="text" name="Name" required>
-      </div>
-      <div class="w3-section">
-        <label><p style="color:white">Email</p></label>
-        <input class="w3-input w3-border" type="text" name="Email" required>
-      </div>
-      <div class="w3-section">
-        <label><p style="color:white">Message</p></label>
-        <input class="w3-input w3-border" type="text" name="Message" required>
-      </div>
-      <button type="submit" class="w3-button w3-block w3-padding-large w3-white w3-margin-bottom">Send Message</button>
-    </form>  
   </div>
 
   <!-- Designers -->
