@@ -38,6 +38,7 @@
 <style>
 #logged_in {
   display:flex;
+  justify-content:center;
 
 }
 body {

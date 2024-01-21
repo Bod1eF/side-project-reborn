@@ -5,8 +5,8 @@ require_once "sql_config.php";
 if (isset($_POST["title"]) && isset($_POST["body"]) && isset($_POST["Category"]) && isset($_POST["name"]) && isset($_SESSION["user_id"])  == true) {//if coming from create post, add post to database
     
   try {
-  $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-    echo "Connected successfully";
+    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    echo '<script>alert("post submitted")</script>'; 
     $acceptable_categories = ["tech", "bio", "crafts", "art"];
     if (!in_array(htmlspecialchars($_POST["Category"]), $acceptable_categories)) {
       header("Location: logout.php");
