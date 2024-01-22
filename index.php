@@ -155,7 +155,7 @@ catch (PDOException $e) {
       echo '<img src="Tech_Cat.png" alt="John" style="width:100%">';
     }
     else  {
-      echo '<img src="Crafts_Cat.png" alt="John" style="width:100%">';
+      echo '<img src="Chainsaw_Cat.png" alt="John" style="width:100%">';
     }
     echo '<div class="w3-container">';
     echo '<h3>'  . $post['title'] .  '</h3>';

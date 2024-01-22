@@ -99,9 +99,11 @@ body {font-size:16px;}
   
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:340px;margin-right:40px">
+<a href="index.php">
 <img src="Untitled_Artwork.png"
     width="900"
     height="500">
     <p style="color:#383436">The #1 website to find collaborators for any project!</p>
+</a>
 </body>
 </html>
